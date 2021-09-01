@@ -19,7 +19,7 @@ function parseErrors(errors) {
 function parseStatus(status) {
   let result = {};
   result.stabilizationMode = status & 3;
-  result.settingMode = (status & 12) >> 2;
+  result.operationMode = (status & 12) >> 2;
   let i = 4;
   result = Object.assign(result, {
     allowCS: Boolean(status & (2 ** ++i)),

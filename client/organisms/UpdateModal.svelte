@@ -1,6 +1,5 @@
 <script>
   import wsClient from '../utils/wsClient';
-  import Button from '../atoms/Button.svelte';
   import Spinner from '../atoms/Spinner.svelte';
   import Modal from '../molecules/Modal.svelte';
   import { __ } from '../utils/translator';
@@ -41,8 +40,8 @@
     {:else if !updateError}
       <p>{$__('update now?')}</p>
       <div class="buttons">
-        <Button on:click={startUpdate}>{$__('yes')}</Button>
-        <Button on:click={closeModal}>{$__('no')}</Button>
+        <button on:click={startUpdate}>{$__('yes')}</button>
+        <button on:click={closeModal}>{$__('no')}</button>
       </div>
     {/if}
   </Modal>

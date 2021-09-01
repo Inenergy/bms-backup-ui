@@ -1,4 +1,4 @@
-const { writable, derived } = require('svelte/store');
+const { writable } = require('svelte/store');
 const { SERIAL_DATA } = require('../common/constants');
 const { isLoading } = require('./utils/translator');
 const client = require('./utils/wsClient');
@@ -41,23 +41,13 @@ function getValue(store) {
   return $val;
 }
 
-let elapsed = 0,
-  timeStart;
+const time = writable('');
 
-const elapsedStore = derived(serialData, (d) => {
-  if (d.start.value) {
-    if (!timeStart) timeStart = Date.now();
-    elapsed = Math.round((Date.now() - timeStart) / 1000);
-  } else {
-    timeStart = 0;
-    elapsed = 0;
-  }
-  return elapsed;
-});
+client.on('time', time.set);
 
 module.exports = {
   serialData,
   appInitialized,
   getValue,
-  elapsed: elapsedStore,
+  time,
 };

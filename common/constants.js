@@ -176,9 +176,9 @@ for (let key in INPUTS) {
 
 const SERIAL_DATA = [...PARAMS_DATA, ...STATE_DATA];
 
-const STABILIZATION_MODES = ['auto', 'onlyBat', 'onlyFC'];
+const OPERATION_MODES = ['auto', 'onlyBat', 'onlyFC'];
 
-const SETTING_MODES = ['upperTemp', 'avgTemp', 'none'];
+const STABILIZATION_MODES = ['upperTemp', 'avgTemp', 'none'];
 
 module.exports = {
   PARAMS_DATA,
@@ -186,5 +186,5 @@ module.exports = {
   SERIAL_DATA,
   INPUTS,
   STABILIZATION_MODES,
-  SETTING_MODES,
+  OPERATION_MODES,
 };

@@ -1,12 +1,13 @@
 <script>
-  import { serialData } from '../stores';
-  import { formatSeconds } from '../utils/helpers';
-
-  let elapsed = 0;
-  serialData.subscribe($dat => {
-    if ($dat.start) elapsed++;
-    else elapsed = 0;
-  });
+  import { time } from '../stores';
 </script>
 
-<div>{formatSeconds(elapsed)}</div>
+<div>{time}</div>
+
+<style>
+  div {
+    position: fixed;
+    top: 1em;
+    left: 2em;
+  }
+</style>

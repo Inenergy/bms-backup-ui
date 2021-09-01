@@ -35,6 +35,7 @@ serial
 
 wsServer.on('connection', (socket) => {
   wsSockets.push(socket);
+  socket.emit('time', new Date().toLocaleString('ru-RU'))
   socket.on(
     'disconnect',
     () => (wsSockets = wsSockets.filter((sock) => sock.id !== socket.id))
@@ -55,6 +56,12 @@ wsServer.on('connection', (socket) => {
       .catch((err) => socket.emit('update failed', err))
   );
 });
+
+// upate time every second
+
+setInterval(() => {
+  wsSockets.forEach(sock => sock.emit('time', new Date().toLocaleString('ru-RU')))
+}, 1000);
 
 // routes
 

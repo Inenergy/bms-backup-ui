@@ -5,7 +5,7 @@
 
   const modeOptions = OPERATION_MODES.map((name, i) => ({ name, value: i + 1 }));
 
-  $: operationMode = $serialData.state.operationMode
+  $: operationMode = $serialData.status.operationMode
 
   function handeInput(e) {
     const {name, value} = e.currentTarget;

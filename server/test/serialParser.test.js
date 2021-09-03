@@ -1,4 +1,5 @@
 const parse = require('../utils/serialParser');
+const { ERRORS, STATUS, STATUS_MODES } = require('../../common/constants');
 
 test('parses params data correctly', () => {
   const bytes = Buffer.alloc(7);
@@ -7,19 +8,18 @@ test('parses params data correctly', () => {
   bytes.writeUInt16BE(12754, 3);
   bytes.writeUInt16BE(2 ** 16 - 1, 5);
   const parsedBytes = parse(bytes);
-  expect(parsedBytes.status).toEqual({
-    stabilizationMode: 3,
-    settingMode: 3,
-    allowCS: true,
-    wasPurged: true,
-    wasCS: true,
-    FCOn: true,
-    BMS1On: true,
-    BMS2On: true,
-    BMS3On: true,
-    BMS4On: true,
-    DcDcOn: true,
-  });
+  const expectedStatus = STATUS_MODES.reduce((obj, key) => {
+    obj[key] = 3;
+    return obj;
+  }, {});
+  Object.assign(
+    expectedStatus,
+    STATUS.reduce((obj, key) => {
+      obj[key] = true;
+      return obj;
+    }, {})
+  );
+  expect(parsedBytes.status).toEqual(expectedStatus);
   expect(parsedBytes.FCVoltage).toBeCloseTo(45.864);
   expect(parsedBytes.FCCurrent).toBeCloseTo(12.754);
 });
@@ -31,14 +31,11 @@ test('parses errors data correctly', () => {
   bytes.writeUInt16BE(1200, 3);
   bytes.writeUInt16BE(2 ** 16 - 1, 5);
   const parsedBytes = parse(bytes);
-  expect(parsedBytes.errors).toEqual({
-    minFcVoltage: true,
-    maxBatVoltage: true,
-    minBatVoltage: true,
-    maxFcTemp: true,
-    minFcTemp: true,
-    thermistor: true,
-  });
+  const expectedErrors = ERRORS.reduce((obj, key) => {
+    obj[key] = true;
+    return obj;
+  }, {});
+  expect(parsedBytes.errors).toEqual(expectedErrors);
   expect(parsedBytes.busPressure).toBeCloseTo(45.864);
   expect(parsedBytes.fanRPM).toBe(1200);
 });

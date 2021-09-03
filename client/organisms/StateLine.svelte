@@ -1,33 +1,118 @@
 <script>
   import { serialData } from '../stores';
+  import StatusLight from '../atoms/StatusLight.svelte';
+
+  let batStatus, FCStatus, fanStatus, FCTempStatus, BMSStatus;
+
+  $: DcDcStatus = $serialData.DcDcOn ? 0 : 3;
+
+  serialData.subscribe((data) => {
+    getBatStatus(data);
+    getFCStatus(data);
+    getFCTempStatus(data);
+    getFanStatus(data);
+    getBMSStatus(data);
+  });
+
+  function getBMSStatus(data) {
+    let counter = 0;
+    for (const i in Array(4)) {
+      if (data.status[`BMS${i}On`]) counter++;
+    }
+    if (counter > 2) {
+      BMSStatus = 3;
+    } else if (counter) {
+      BMSStatus = 2;
+    } else {
+      BMSStatus = 0;
+    }
+  }
+
+  function getBatStatus(data) {
+    const min = Math.ceil(data.minBatVoltage * 10) / 10;
+    const max = Math.floor(data.maxBatVoltage * 10) / 10;
+    const diff = max - min;
+    const minThreshold = min + diff * 0.1;
+    const maxThreshold = max - diff * 0.1;
+    if (data.batVoltage >= max || data.batVoltage <= min) {
+      batStatus = 3;
+    } else if (
+      data.batVoltage < maxThreshold &&
+      data.batVoltage > minThreshold
+    ) {
+      batStatus = 0;
+    } else {
+      batStatus = 2;
+    }
+  }
+
+  function getFCStatus(data) {
+    const min = Math.ceil(data.minFCCurrent * 10) / 10;
+    const max = Math.floor(data.maxFCCurrent * 10) / 10;
+    const diff = max - min;
+    const maxThreshold = max - diff * 0.1;
+    if (data.FCCurrent >= max) {
+      FCStatus = 3;
+    } else if (data.FCCurrent > maxThreshold && data.FCCurrent < min) {
+      FCStatus = 2;
+    } else if (data.status.FCOn) {
+      FCStatus = 1;
+    } else if (
+      data.FCVoltage > data.minFCVoltage &&
+      data.FCCurrent < maxThreshold
+    ) {
+      FCStatus = 0;
+    }
+  }
+
+  function getFCTempStatus(data) {
+    if (
+      data.FCTemp <= -100 ||
+      data.FCTemp < data.minFCTemp ||
+      data.FCTemp > data.maxFCTemp
+    ) {
+      FCTempStatus = 3;
+    } else if (data.status.stabilizationMode != 2) {
+      const temps = Array(5).map((_, i) => data['temp' + (i + 1)]);
+      const temp = data.status.stabilizationMode
+        ? Math.max(...temps)
+        : temps.reduce((sum, n) => sum + n, 0) / 5;
+      if (Math.abs(temp - data.stabilizationTemp) <= 3) batStatus = 0;
+      else if (Math.abs(temp - data.stabilizationTemp) <= 6) batStatus = 2;
+    }
+  }
+
+  function getFanStatus(data) {
+    // TODO
+    return 0;
+  }
 </script>
 
 <div class="row">
   <div class="column">
     <label for="bat-state">АКБ</label>
-    <input type="checkbox" id="bat-state" readonly checked={$serialData.state}>
+    <StatusLight status={batStatus} />
   </div>
   <div class="column">
     <label for="fc-state">ТЭ ЭЛ</label>
-    <input type="checkbox" id="fc-state" readonly checked={$serialData.state.FCOn}>
+    <StatusLight status={FCStatus} />
   </div>
   <div class="column">
     <label for="fc-temp-state">ТЭ Темп</label>
-    <input type="checkbox" id="fc-temp-state" readonly checked={$serialData.state}>
+    <StatusLight status={FCTempStatus} />
   </div>
   <div class="column">
     <label for="dcdc-state">Dc-Dc</label>
-    <input type="checkbox" id="dcdc-state" readonly checked={$serialData.state.DcDcOn}>
+    <StatusLight status={DcDcStatus} />
   </div>
   <div class="column">
     <label for="fan-state">Вентилятор</label>
-    <input type="checkbox" id="fan-state" readonly checked={$serialData.state}>
+    <StatusLight status={fanStatus} />
   </div>
   <div class="column">
     <label for="bms-state">BMS</label>
-    <input type="checkbox" id="bms-1-state" readonly checked={$serialData.state.BMS1On}>
-    <input type="checkbox" id="bms-2-state" readonly checked={$serialData.state.BMS2On}>
-    <input type="checkbox" id="bms-3-state" readonly checked={$serialData.state.BMS3On}>
-    <input type="checkbox" id="bms-4-state" readonly checked={$serialData.state.BMS4On}>
+    {#each [0, 1, 2, 3] as i}
+      <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} />
+    {/each}
   </div>
 </div>

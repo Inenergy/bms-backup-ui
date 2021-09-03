@@ -1,37 +1,33 @@
-const { SERIAL_DATA } = require('../../common/constants');
+const {
+  SERIAL_DATA,
+  ERRORS,
+  STATUS,
+  STATUS_MODES,
+} = require('../../common/constants');
 
 function validate(bytes) {
   if (bytes.length != 7) throw new Error('Invalid buffer recieved');
 }
 
 function parseErrors(errors) {
-  let i = -1;
-  return {
-    minFcVoltage: Boolean(errors & (2 ** ++i)),
-    maxBatVoltage: Boolean(errors & (2 ** ++i)),
-    minBatVoltage: Boolean(errors & (2 ** ++i)),
-    maxFcTemp: Boolean(errors & (2 ** ++i)),
-    minFcTemp: Boolean(errors & (2 ** ++i)),
-    thermistor: Boolean(errors & (2 ** ++i)),
-  };
+  return ERRORS.reduce((obj, key, i) => {
+    obj[key] = Boolean(errors & (2 ** i));
+    return obj;
+  }, {});
 }
 
 function parseStatus(status) {
   let result = {};
-  result.stabilizationMode = status & 3;
-  result.operationMode = (status & 12) >> 2;
-  let i = 4;
-  result = Object.assign(result, {
-    allowCS: Boolean(status & (2 ** ++i)),
-    wasPurged: Boolean(status & (2 ** ++i)),
-    wasCS: Boolean(status & (2 ** ++i)),
-    FCOn: Boolean(status & (2 ** ++i)),
-    BMS1On: Boolean(status & (2 ** ++i)),
-    BMS2On: Boolean(status & (2 ** ++i)),
-    BMS3On: Boolean(status & (2 ** ++i)),
-    BMS4On: Boolean(status & (2 ** ++i)),
-    DcDcOn: Boolean(status & (2 ** 15)),
+  STATUS_MODES.forEach((key, i) => {
+    result[key] = (status & (4 ** i + 2 ** (2 * i + 1))) >> (2 * i);
   });
+  Object.assign(
+    result,
+    STATUS.reduce((obj, key, i) => {
+      obj[key] = Boolean(status & (2 ** (i + 4)));
+      return obj;
+    }, {})
+  );
   return result;
 }
 

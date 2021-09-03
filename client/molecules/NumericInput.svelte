@@ -1,7 +1,7 @@
 <script>
   import { serialData } from '../stores';
   import onChange from '../utils/inputHandler';
-  import { INPUTS } from '../../common/constans';
+  import { INPUTS } from '../../common/constants';
   export let attrs = {};
 
   const { name, label, units } = attrs;
@@ -32,12 +32,12 @@
     {max}
   />
   {#if units}
-    <em> {label}</em>
+    <em> {units}</em>
   {/if}
 </label>
 
 <style>
   input {
-    width: 10em;
+    width: 5em;
   }
 </style>

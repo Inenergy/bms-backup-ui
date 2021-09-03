@@ -1,12 +1,11 @@
 <script>
   import { serialData } from '../stores';
   import Input from '../molecules/NumericInput.svelte';
-  export let sendSerialCommand;
+  import sendSerialCommand from '../utils/inputHandler';
 
   const pressureRow = [
     { name: 'minPressure', label: 'Мин', units: 'бар' },
     { name: 'maxPressure', label: 'Макс', units: 'бар' },
-    { name: 'limitPressure', label: 'Отсечка', units: 'бар' },
   ];
 
   const limitsRow = [
@@ -22,7 +21,6 @@
   const purgeRow = [
     { name: 'purgeDuration', label: 'Продувка', units: 'мс' },
     { name: 'purgeDelay', label: 'Задержка', units: 'c' },
-    { name: 'purgeShift', label: 'Смещение', units: 'с' },
   ];
 </script>
 
@@ -30,8 +28,12 @@
   <h2>ТЭ</h2>
 </div>
 <div class="row">
-  <div class="column">{$serialData.FCVoltage}</div>
-  <div class="column">{$serialData.FCCurrent}</div>
+  <div class="column">
+    <span class="emphasize">{$serialData.FCVoltage.toFixed(2)}</span>
+  </div>
+  <div class="column">
+    <span class="emphasize">{$serialData.FCCurrent.toFixed(2)}</span>
+  </div>
 </div>
 <div class="row">
   <div class="column">{$serialData.hydrogenPressure}, бар</div>
@@ -56,8 +58,8 @@
   {/each}
 </div>
 <div class="row">
-  <div class="column-33">Температура стабилизации</div>
-  <div class="column-33">
+  <div class="column column-33">Температура стабилизации</div>
+  <div class="column column-33">
     {$serialData.stabilizationTemp}/
     <input
       type="number"
@@ -68,7 +70,7 @@
 </div>
 <div class="row">
   {#each limitsRow as input}
-    <div class="column-33">
+    <div class="column column-33">
       <Input attrs={input} />
     </div>
   {/each}
@@ -92,9 +94,15 @@
       <input
         type="checkbox"
         name="allowCS"
-        on:change={(e) =>
-          sendSerialCommand(e.target.checked, e.EventTarget.name)}
+        on:change={(e) => sendSerialCommand(e.target.checked, e.target.name)}
       />
     </label>
   </div>
 </div>
+
+<style>
+  .emphasize {
+    font-size: 3.2em;
+    font-weight: 500;
+  }
+</style>

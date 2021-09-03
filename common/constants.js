@@ -43,11 +43,11 @@ const PARAMS_DATA = [
   { name: 'temp5', divider: 10 },
   { name: 'temp6', divider: 10 },
   {
-    name: 'BatVoltage',
+    name: 'batVoltage',
     divider: 1000,
   },
   {
-    name: 'BatCurrent',
+    name: 'batCurrent',
     divider: 1000,
   },
   {
@@ -62,6 +62,32 @@ const PARAMS_DATA = [
   { name: 'reserve' },
   { name: 'reserve' },
   { name: 'reserve' },
+];
+
+const STATUS = [
+  'allowCS',
+  'wasPurged',
+  'wasCS',
+  'FCOn',
+  'BMS0On',
+  'BMS1On',
+  'BMS2On',
+  'BMS3On',
+  'reserve',
+  'reserve',
+  'reserve',
+  'DcDcOn',
+];
+
+const STATUS_MODES = ['stabilizationMode', 'operationMode'];
+
+const ERRORS = [
+  'minFcVoltage',
+  'maxBatVoltage',
+  'minBatVoltage',
+  'maxFcTemp',
+  'minFcTemp',
+  'thermistor',
 ];
 
 const INPUTS = {
@@ -187,4 +213,7 @@ module.exports = {
   INPUTS,
   STABILIZATION_MODES,
   OPERATION_MODES,
+  ERRORS,
+  STATUS,
+  STATUS_MODES,
 };

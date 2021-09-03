@@ -4,7 +4,7 @@
   import Timer from '../molecules/Timer.svelte';
   import Version from '../atoms/Version.svelte';
   import StateLine from '../organisms/StateLine.svelte';
-  import ModeSelector from '../molecules/ModeSelector';
+  import ModeSelector from '../molecules/ModeSelector.svelte';
 </script>
 
 <div class="container">

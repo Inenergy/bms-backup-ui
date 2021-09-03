@@ -31,11 +31,26 @@ serial
     wsSockets.forEach((sock) => sock.emit('command sent'))
   );
 
+function convertCommandAndSendSerialCommand(name, value) {
+  if (isNaN(value)) return;
+  const input = INPUTS[name];
+  value = Math.min(Math.max(value, input.constraints[0]), input.constraints[1]);
+  value *= input.multiplier || 1;
+  value -= input.substract || 0;
+  serial.sendCommand(input.id, value);
+}
+
+// logger initialization
+const logger = require('./utils/logger');
+logger.start().then(() => {
+  serial.on('data', logger.writeRow)
+})
+
 // socket connection handling
 
 wsServer.on('connection', (socket) => {
   wsSockets.push(socket);
-  socket.emit('time', new Date().toLocaleString('ru-RU'))
+  socket.emit('time', new Date().toLocaleString('ru-RU'));
   socket.on(
     'disconnect',
     () => (wsSockets = wsSockets.filter((sock) => sock.id !== socket.id))
@@ -48,7 +63,7 @@ wsServer.on('connection', (socket) => {
       })
       .catch(console.error);
   });
-  socket.on('serial command', serial.sendCommand);
+  socket.on('serial command', convertCommandAndSendSerialCommand);
   socket.on('update programm', () =>
     updater
       .update()
@@ -60,7 +75,9 @@ wsServer.on('connection', (socket) => {
 // upate time every second
 
 setInterval(() => {
-  wsSockets.forEach(sock => sock.emit('time', new Date().toLocaleString('ru-RU')))
+  wsSockets.forEach((sock) =>
+    sock.emit('time', new Date().toLocaleString('ru-RU'))
+  );
 }, 1000);
 
 // routes

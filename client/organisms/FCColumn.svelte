@@ -6,6 +6,7 @@
   const pressureRow = [
     { name: 'minPressure', label: 'Мин', units: 'бар' },
     { name: 'maxPressure', label: 'Макс', units: 'бар' },
+    { name: 'limitPressure', label: 'Отсечка', units: 'бар' },
   ];
 
   const limitsRow = [
@@ -21,15 +22,15 @@
   const purgeRow = [
     { name: 'purgeDuration', label: 'Продувка', units: 'мс' },
     { name: 'purgeDelay', label: 'Задержка', units: 'c' },
+    { name: 'CSShift', label: 'Смещение', units: 'с' },
   ];
 </script>
 
-<div class="row">
-  <h2>ТЭ</h2>
-</div>
+<h2>ТЭ</h2>
 <div class="row">
   <div class="column">
     <span class="emphasize">{$serialData.FCVoltage.toFixed(2)}</span>
+
   </div>
   <div class="column">
     <span class="emphasize">{$serialData.FCCurrent.toFixed(2)}</span>

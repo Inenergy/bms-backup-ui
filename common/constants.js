@@ -193,6 +193,10 @@ const INPUTS = {
     step: 0.5,
     multiplier: 2,
   },
+  limitPressure: {
+    constraints: [0, 2500],
+    multiplier: 0.02,
+  },
 };
 
 let i = 0;
@@ -202,9 +206,9 @@ for (let key in INPUTS) {
 
 const SERIAL_DATA = [...PARAMS_DATA, ...STATE_DATA];
 
-const OPERATION_MODES = ['auto', 'onlyBat', 'onlyFC'];
+const OPERATION_MODES = ['Авто', 'Только АКБ', 'Только ТЭ'];
 
-const STABILIZATION_MODES = ['upperTemp', 'avgTemp', 'none'];
+const STABILIZATION_MODES = ['По верхней t', 'По средней t', 'Нет'];
 
 module.exports = {
   PARAMS_DATA,

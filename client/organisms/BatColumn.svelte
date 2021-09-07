@@ -1,5 +1,5 @@
 <script>
-  import { serialData } from '../stores';
+  import { serialData, chargePercent } from '../stores';
   import { STABILIZATION_MODES } from '../../common/constants';
   import Input from '../molecules/NumericInput.svelte';
   import sendSerialCommand from '../utils/inputHandler';
@@ -39,15 +39,16 @@
   ];
 </script>
 
-<div class="row">
-  <h2>АКБ</h2>
-</div>
+<h2>АКБ</h2>
 <div class="row">
   <div class="column">
     <span class="emphasize">{$serialData.batVoltage.toFixed(2)}В</span>
   </div>
   <div class="column">
     <span class="emphasize">{$serialData.batCurrent.toFixed(2)}А</span>
+  </div>
+  <div class="column">
+    <span class="emphasize">{$chargePercent}%</span>
   </div>
 </div>
 <div class="row">
@@ -68,7 +69,13 @@
 
 <div class="row">
   <div class="column">
-    <Input attrs={{ label: 'Вентилятор 45% + ', units: '%', name: 'fanLoadCorrective' }} />
+    <Input
+      attrs={{
+        label: 'Вентилятор 45% + ',
+        units: '%',
+        name: 'fanLoadCorrective',
+      }}
+    />
   </div>
   <div class="column">
     {$serialData.fanRPM}

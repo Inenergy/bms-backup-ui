@@ -2,7 +2,7 @@
   import { time } from '../stores';
 </script>
 
-<div>{time}</div>
+<div>{$time}</div>
 
 <style>
   div {

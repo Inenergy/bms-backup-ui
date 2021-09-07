@@ -13,6 +13,8 @@
   }
 </script>
 
+<div class="row">
+<h3>Режим работы</h3>
 <select name="operationMode" on:blur={handeInput}>
   {#each modeOptions as option}
     <option
@@ -21,3 +23,20 @@
     >
   {/each}
 </select>
+
+<h4>Температура воздуха {$serialData.temp6}</h4>
+</div>
+
+
+<style>
+  .row {
+    height: 100%;
+    flex-direction: column;
+  }
+  h3 {
+    margin-top: 3em;
+  }
+  h4 {
+    margin: auto;
+  }
+</style>

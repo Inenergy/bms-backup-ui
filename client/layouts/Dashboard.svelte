@@ -4,17 +4,15 @@
   import Timer from '../molecules/Timer.svelte';
   import Version from '../atoms/Version.svelte';
   import StateLine from '../organisms/StateLine.svelte';
-  import ModeSelector from '../molecules/ModeSelector.svelte';
+  import CommonColumn from '../organisms/CommonColumn.svelte';
 </script>
 
 <div class="container">
   <Timer />
   <Version />
   <div class="row">
-    <ModeSelector />
-  </div>
-  <div class="row">
     <div class="column"><FCColumn /></div>
+    <div class="column column-20"><CommonColumn /></div>
     <div class="column"><BatColumn /></div>
   </div>
   <StateLine />
@@ -23,5 +21,6 @@
 <style>
   .container {
     position: relative;
+    margin-top: 5em;
   }
 </style>

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+const { getFormatedDate } = require('../../common/helpers');
 const { SERIAL_DATA } = require('../../common/constants');
 
 let log, logPath, logName;
@@ -20,7 +20,7 @@ async function start() {
   } catch {
     await fs.promises.mkdir(logDir);
   }
-  logName = `${new Date().toLocaleDateString()}.log`;
+  logName = `${getFormatedDate('YYYY-MM-DD--HH-mm-ss')}.log`;
   logPath = `${logDir}/${logName}`;
   log = fs.createWriteStream(logPath);
   writeLogData(tableHeader);

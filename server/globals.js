@@ -5,7 +5,7 @@ const IS_RPI = process.platform === 'linux' && process.arch == 'arm';
 exports.isPi = IS_RPI;
 
 exports.PORT = {
-  name: IS_RPI ? '/dev/ttyS0' : 'COM5',
+  name: IS_RPI ? '/dev/serial0' : 'COM5',
   baudRate: 230400,
 };
 

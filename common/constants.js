@@ -4,6 +4,7 @@ const STATE_DATA = [
   { name: 'minFCTemp' },
   { name: 'maxFCTemp' },
   { name: 'purgeDuration' },
+  { name: 'purgeDelay' },
   { name: 'purgeValvePressure', divider: 100 },
   { name: 'fanLoad' },
   { name: 'CSDuration' },

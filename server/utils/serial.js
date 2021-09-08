@@ -7,11 +7,16 @@ const emitter = new EventEmitter();
 const serial = new Serial(PORT.name, { baudRate: PORT.baudRate });
 
 serial.on('data', handleData);
+let buffer = Buffer.from([]);
 
 function handleData(buf) {
   if (buf.toString('ascii').startsWith('ok')) return;
+  if (!(buf.length % 7)) buffer = buf;
+  else buffer = Buffer.concat([buffer, buf]);
+  if (buffer.length < 70 && buf.length % 7) return;
   try {
-    emitter.emit('data', parse(buf));
+    emitter.emit('data', parse(buffer));
+    buffer = Buffer.from([]);
   } catch (e) {
     console.error(e.message);
   }

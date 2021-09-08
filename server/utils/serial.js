@@ -8,12 +8,10 @@ const serial = new Serial(PORT.name, { baudRate: PORT.baudRate });
 
 serial.on('data', handleData);
 
-let buffer = Buffer.from([]);
-
 function handleData(buf) {
   if (buf.toString('ascii').startsWith('ok')) return;
   try {
-    emitter.emit('data', parse(buffer));
+    emitter.emit('data', parse(buf));
   } catch (e) {
     console.error(e.message);
   }

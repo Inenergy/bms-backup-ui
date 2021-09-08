@@ -6,7 +6,7 @@ const {
 } = require('../../common/constants');
 
 function validate(bytes) {
-  if (bytes.length != 7) throw new Error('Invalid buffer recieved');
+  if (bytes.length % 7) throw new Error('Invalid buffer recieved');
 }
 
 function parseErrors(errors) {
@@ -31,9 +31,8 @@ function parseStatus(status) {
   return result;
 }
 
-module.exports = function parse(bytes) {
-  validate(bytes);
-  let packetId = bytes[0];
+function parseChunk(chunk) {
+  let packetId = chunk[0];
   let entryIdx =
     packetId < 30 ? ((packetId - 3) / 4) * 3 : ((packetId - 39) / 4) * 6 + 18;
   const parsedBytes = {};
@@ -42,20 +41,30 @@ module.exports = function parse(bytes) {
     const entry = SERIAL_DATA[entryIdx];
     let value;
     if (entryIdx === 2) {
-      value = parseStatus(bytes.readUInt16BE(i));
+      value = parseStatus(chunk.readUInt16BE(i));
       i += 2;
     } else if (entryIdx === 14) {
-      value = parseErrors(bytes.readUInt16BE(i));
+      value = parseErrors(chunk.readUInt16BE(i));
       i += 2;
     } else if (packetId < 30) {
-      value = bytes.readUInt16BE(i) / (entry.divider || 1);
+      value = chunk.readUInt16BE(i) / (entry.divider || 1);
       i += 2;
     } else {
-      value = bytes[i] / (entry.divider || 1);
+      value = chunk[i] / (entry.divider || 1);
       i += 1;
     }
     parsedBytes[entry.name] = value;
     entryIdx++;
+  }
+  return parsedBytes;
+}
+
+module.exports = function parse(bytes) {
+  validate(bytes);
+  const parsedBytes = {};
+  const totalChunks = bytes.length / 7;
+  for (let i = 0; i < totalChunks; ++i) {
+    Object.assign(parsedBytes, parseChunk(bytes.slice(i * 7, (i + 1) * 7)));
   }
   return parsedBytes;
 };

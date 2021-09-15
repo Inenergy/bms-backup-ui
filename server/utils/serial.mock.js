@@ -11,12 +11,15 @@ const dataMap = SERIAL_DATA.reduce((a, e) => {
 }, {});
 for (const key in dataMap) dataMap[key] = 0;
 
+dataMap.maxBatVoltage = 100;
+dataMap.minBatVoltage = 0;
+
 function sendData() {
   emitter.emit('data', generateData());
 }
 
 function generateData() {
-  for (const key of ['FCVoltage', 'FCCurrent'])
+  for (const key of ['FCVoltage', 'FCCurrent', 'batVoltage'])
     dataMap[key]= +(Math.random() * 100).toFixed(3);
   return dataMap;
 }

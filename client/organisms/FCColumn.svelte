@@ -60,7 +60,7 @@
 <div class="row">
   <div class="column column-33">Температура стабилизации</div>
   <div class="column column-33">
-    {$serialData.stabilizationTemp}/
+    {$serialData.currentStabilizationTemp}/
     <input
       type="number"
       name="stabilizationTemp"

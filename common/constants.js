@@ -22,7 +22,7 @@ const STATE_DATA = [
   { name: 'DstabilizationCoefficient', divider: 100 },
   { name: 'fanLoadCorrective' },
   { name: 'maxBatCurrent' },
-  { name: 'reserve' },
+  { name: 'currentStablizationTemp' },
 ];
 
 const PARAMS_DATA = [

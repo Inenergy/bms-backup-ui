@@ -29,11 +29,10 @@
 <h2>ТЭ</h2>
 <div class="row">
   <div class="column">
-    <span class="emphasize">{$serialData.FCVoltage.toFixed(2)}</span>
-
+    <span class="emphasize">{$serialData.FCVoltage.toFixed(2)}В</span>
   </div>
   <div class="column">
-    <span class="emphasize">{$serialData.FCCurrent.toFixed(2)}</span>
+    <span class="emphasize">{$serialData.FCCurrent.toFixed(2)}А</span>
   </div>
 </div>
 <div class="row">

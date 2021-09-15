@@ -5,7 +5,7 @@ module.exports = function getJSON(options) {
     https
       .get(options, (res) => {
         if (res.statusCode !== 200)
-          .reject(
+          reject(
             new Error('Request Failed.\n' + `Status Code: ${res.statusCode}`)
           );
 

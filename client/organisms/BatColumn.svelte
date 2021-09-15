@@ -95,7 +95,7 @@
 <div class="row">
   <label>
     Режим стабилизации
-    <select name="stabilizationMode" on:blur={changeStablizationMode}>
+    <select name="stabilizationMode" on:change={changeStablizationMode}>
       {#each stabilizationOptions as option}
         <option
           value={option.value}

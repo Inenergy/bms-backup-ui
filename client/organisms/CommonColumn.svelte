@@ -15,7 +15,7 @@
 
 <div class="row">
 <h3>Режим работы</h3>
-<select name="operationMode" on:blur={handeInput}>
+<select name="operationMode" on:change={handeInput}>
   {#each modeOptions as option}
     <option
       value={option.value}

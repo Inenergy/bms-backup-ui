@@ -209,7 +209,7 @@ const SERIAL_DATA = [...PARAMS_DATA, ...STATE_DATA];
 
 const OPERATION_MODES = ['Авто', 'Только АКБ', 'Только ТЭ'];
 
-const STABILIZATION_MODES = ['По верхней t', 'По средней t', 'Нет'];
+const STABILIZATION_MODES = ['По верхней t', 'По средней t', 'Стаб откл, вент макс'];
 
 module.exports = {
   PARAMS_DATA,

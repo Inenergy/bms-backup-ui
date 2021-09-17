@@ -32,7 +32,7 @@ serial
   );
 
 function convertCommandAndSendSerialCommand(name, value) {
-  if (isNaN(value)) return;
+  if (typeof(value) != 'number') return;
   const input = INPUTS[name];
   value = Math.min(Math.max(value, input.constraints[0]), input.constraints[1]);
   value *= input.multiplier || 1;

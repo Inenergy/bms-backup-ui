@@ -2,9 +2,9 @@
   import { serialData } from '../stores';
   import StatusLight from '../atoms/StatusLight.svelte';
 
-  let batStatus, FCStatus, fanStatus, FCTempStatus, BMSStatus;
+  let batStatus, FCStatus, fanStatus, FCTempStatus, BMSStatus, BMSState = [];
 
-  $: DcDcStatus = $serialData.DcDcOn ? 0 : 3;
+  $: DcDcStatus = $serialData.status.DcDcOn ? 0 : 3;
 
   serialData.subscribe((data) => {
     getBatStatus(data);
@@ -16,8 +16,9 @@
 
   function getBMSStatus(data) {
     let counter = 0;
-    for (const i in Array(4)) {
+    for (let i = 0; i < 4; ++i) {
       if (data.status[`BMS${i}On`]) counter++;
+      BMSState[i] = data.status[`BMS${i}On`];
     }
     if (counter > 2) {
       BMSStatus = 3;
@@ -111,8 +112,9 @@
   </div>
   <div class="column">
     <label for="bms-state">BMS</label>
-    {#each [0, 1, 2, 3] as i}
-      <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} />
+    {#each BMSState as isOn}
+      <!-- <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} /> -->
+      <StatusLight status={isOn ? BMSStatus : 0} />
     {/each}
   </div>
 </div>

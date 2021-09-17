@@ -4,9 +4,9 @@
   import sendSerialCommand from '../utils/inputHandler';
 
   const pressureRow = [
-    { name: 'minPressure', label: 'Мин', units: 'бар' },
-    { name: 'maxPressure', label: 'Макс', units: 'бар' },
-    { name: 'limitPressure', label: 'Отсечка', units: 'бар' },
+    { name: 'minPressure', label: 'Мин', units: 'мБар' },
+    { name: 'maxPressure', label: 'Макс', units: 'мБар' },
+    { name: 'limitPressure', label: 'Отсечка', units: 'мБар' },
   ];
 
   const limitsRow = [

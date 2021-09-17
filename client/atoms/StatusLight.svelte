@@ -13,15 +13,17 @@
     background-color: lightgrey;
     border: 1px solid;
     display: inline-block;
+    border-radius: 50%;
+    margin-left: 0.8rem;
   }
   .red {
-    background-color: red;
+    background-color: #E10600;
   }
   .yellow {
-    background-color: yellow;
+    background-color: #ffc107;
   }
   .green {
-    background-color: green;
+    background-color: #28a745;
   }
   .blink {
     animation: blink alternate infinite;

@@ -94,7 +94,7 @@
       <input
         type="checkbox"
         name="allowCS"
-        on:change={(e) => sendSerialCommand(e.target.checked, e.target.name)}
+        on:change={(e) => sendSerialCommand(e.target.name, +e.target.checked)}
       />
     </label>
   </div>

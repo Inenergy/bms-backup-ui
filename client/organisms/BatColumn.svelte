@@ -61,7 +61,7 @@
 
 <div class="row">
   {#each voltageThresholdRow as input}
-    <div class="column-33">
+    <div class="column column-33">
       <Input attrs={input} />
     </div>
   {/each}

@@ -34,8 +34,8 @@
   ];
 
   const tempLimitsRow = [
-    { name: 'minFCTemp', label: 'Мин напр', units: 'В' },
-    { name: 'maxFCTemp', label: 'Макс напр', units: 'В' },
+    { name: 'minFCTemp', label: 'Мин', units: 'C' },
+    { name: 'maxFCTemp', label: 'Макс', units: 'C' },
   ];
 </script>
 
@@ -108,7 +108,7 @@
 </div>
 
 <div class="row">
-  <div class="column">Пределы ТЭ</div>
+  <div class="column">Пределы t ТЭ</div>
   {#each tempLimitsRow as input}
     <div class="column column-33">
       <Input attrs={input} />

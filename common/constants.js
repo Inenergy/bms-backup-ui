@@ -15,8 +15,8 @@ const STATE_DATA = [
   { name: 'maxFCCurrent' },
   { name: 'minFCVoltage' },
   { name: 'stabilizationTemp' },
-  { name: 'minBatVoltage', divider: 10 },
-  { name: 'maxBatVoltage', divider: 10 },
+  { name: 'minBatVoltage', divider: 10, add: 40 },
+  { name: 'maxBatVoltage', divider: 10, add: 40 },
   { name: 'PstabilizationCoefficient', divider: 100 },
   { name: 'IstabilizationCoefficient', divider: 100 },
   { name: 'DstabilizationCoefficient', divider: 100 },
@@ -160,7 +160,7 @@ const INPUTS = {
     constraints: [0, 100],
   },
   PStabilizationCoefficient: {
-    constraints: [0.1, 2],
+    constraints: [0.1, 2.5],
     step: 0.05,
     multiplier: 100,
   },
@@ -170,7 +170,7 @@ const INPUTS = {
     multiplier: 100,
   },
   DStabilizationCoefficient: {
-    constraints: [0.1, 2],
+    constraints: [0.1, 2.5],
     step: 0.05,
     multiplier: 100,
   },

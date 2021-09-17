@@ -26,7 +26,6 @@
   function normalizeValue() {
     value = Math.max(min, Math.min(value, max));
     onChange(name, value);
-    updateBlocked = false;
   }
 </script>
 

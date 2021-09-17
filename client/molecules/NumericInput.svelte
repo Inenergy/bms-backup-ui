@@ -49,6 +49,9 @@
 </label>
 
 <style>
+  label {
+    display: inline-block; 
+  }
   input {
     width: 5em;
   }

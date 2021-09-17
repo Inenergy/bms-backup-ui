@@ -23,8 +23,8 @@
   ];
 
   const voltageThresholdRow = [
-    { name: 'minBatVoltageThreshold', label: 'Мин напр', units: 'В' },
-    { name: 'maxBatVoltageThreshold', label: 'Макс напр', units: 'В' },
+    { name: 'minBatVoltageThreshold', label: 'Напр вкл ТЭ', units: 'В' },
+    { name: 'maxBatVoltageThreshold', label: 'Напр выкл ТЭ', units: 'В' },
   ];
 
   const coefficientsRow = [

@@ -7,15 +7,15 @@
 
   $: operationMode = $serialData.status.operationMode
 
-  function handeInput(e) {
+  function handleInput(e) {
     const {name, value} = e.currentTarget;
-    sendSerialCommand(name, value);
+    sendSerialCommand(name, +value);
   }
 </script>
 
 <div class="row">
 <h3>Режим работы</h3>
-<select name="operationMode" on:change={handeInput}>
+<select name="operationMode" on:change={handleInput}>
   {#each modeOptions as option}
     <option
       value={option.value}

@@ -13,7 +13,7 @@
 
   function changeStablizationMode(e) {
     const { name, value } = e.currentTarget;
-    sendSerialCommand(name, value);
+    sendSerialCommand(name, +value);
   }
 
   const limitsRow = [

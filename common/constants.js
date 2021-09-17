@@ -3,7 +3,7 @@ const STATE_DATA = [
   { name: 'maxFCPressure', divider: 100 },
   { name: 'minFCTemp' },
   { name: 'maxFCTemp' },
-  { name: 'purgeDuration' },
+  { name: 'purgeDuration', divider: 0.1 },
   { name: 'purgeDelay' },
   { name: 'purgeValvePressure', divider: 100 },
   { name: 'fanLoad' },
@@ -22,7 +22,7 @@ const STATE_DATA = [
   { name: 'DstabilizationCoefficient', divider: 100 },
   { name: 'fanLoadCorrective' },
   { name: 'maxBatCurrent' },
-  { name: 'currentStablizationTemp' },
+  { name: 'currentStabilizationTemp' },
 ];
 
 const PARAMS_DATA = [
@@ -209,7 +209,11 @@ const SERIAL_DATA = [...PARAMS_DATA, ...STATE_DATA];
 
 const OPERATION_MODES = ['Авто', 'Только АКБ', 'Только ТЭ'];
 
-const STABILIZATION_MODES = ['По верхней t', 'По средней t', 'Стаб откл, вент макс'];
+const STABILIZATION_MODES = [
+  'По верхней t',
+  'По средней t',
+  'Стаб откл, вент макс',
+];
 
 module.exports = {
   PARAMS_DATA,

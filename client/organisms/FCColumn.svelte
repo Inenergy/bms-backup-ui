@@ -61,10 +61,11 @@
   <div class="column column-33">Температура стабилизации</div>
   <div class="column column-33">
     {$serialData.currentStabilizationTemp}/
-    <input
-      type="number"
-      name="stabilizationTemp"
-      on:change={sendSerialCommand}
+    <Input
+      attrs = {{
+        label: '',
+        name: "stabilizationTemp",
+      }}
     />
   </div>
 </div>

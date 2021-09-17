@@ -50,7 +50,7 @@ function parseChunk(chunk) {
       value = chunk.readUInt16BE(i) / (entry.divider || 1);
       i += 2;
     } else {
-      value = chunk[i] / (entry.divider || 1);
+      value = chunk[i] / (entry.divider || 0) + (entry.add || 0);
       i += 1;
     }
     parsedBytes[entry.name] = value;

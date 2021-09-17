@@ -21,7 +21,7 @@ const STATE_DATA = [
   { name: 'IstabilizationCoefficient', divider: 100 },
   { name: 'DstabilizationCoefficient', divider: 100 },
   { name: 'fanLoadCorrective' },
-  { name: 'maxBatCurrent' },
+  { name: 'maxBatCurrent', divider: 2 },
   { name: 'currentStabilizationTemp' },
 ];
 

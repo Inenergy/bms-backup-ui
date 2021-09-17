@@ -69,9 +69,10 @@
 
 <div class="row">
   <div class="column">
+    <strong>Вентилятор {$serialData.fanLoad}% + </strong>
     <Input
       attrs={{
-        label: 'Вентилятор 45% + ',
+        label: ``,
         units: '%',
         name: 'fanLoadCorrective',
       }}

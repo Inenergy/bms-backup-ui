@@ -1,11 +1,11 @@
 const STATE_DATA = [
-  { name: 'minPressure', divider: 100 },
-  { name: 'maxPressure', divider: 100 },
+  { name: 'minPressure', divider: 0.1 },
+  { name: 'maxPressure', divider: 0.1 },
   { name: 'minFCTemp' },
   { name: 'maxFCTemp' },
   { name: 'purgeDuration', divider: 0.1 },
   { name: 'purgeDelay' },
-  { name: 'limitPressure', divider: 100 },
+  { name: 'limitPressure', divider: 0.1 },
   { name: 'fanLoad' },
   { name: 'CSDuration' },
   { name: 'CSDelay' },
@@ -130,12 +130,12 @@ const INPUTS = {
   },
   minPressure: {
     constraints: [0, 2500],
-    multiplier: 0.02,
+    multiplier: 0.1,
     step: 50,
   },
   maxPressure: {
     constraints: [0, 2500],
-    multiplier: 0.02,
+    multiplier: 0.1,
     step: 50,
   },
   minBatVoltage: {
@@ -196,7 +196,7 @@ const INPUTS = {
   },
   limitPressure: {
     constraints: [0, 2500],
-    multiplier: 0.02,
+    multiplier: 0.1,
   },
 };
 

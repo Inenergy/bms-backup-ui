@@ -35,8 +35,8 @@ function convertCommandAndSendSerialCommand(name, value) {
   if (typeof(value) != 'number') return;
   const input = INPUTS[name];
   value = Math.min(Math.max(value, input.constraints[0]), input.constraints[1]);
+  value -= input.subtract || 0;
   value *= input.multiplier || 1;
-  value -= input.substract || 0;
   serial.sendCommand(input.id, value);
 }
 

@@ -25,6 +25,7 @@
 
   function normalizeValue() {
     value = Math.max(min, Math.min(value, max));
+    value = Math.round(value / step) * step;
     onChange(name, value);
   }
 </script>

@@ -37,25 +37,27 @@ const PARAMS_DATA = [
   {
     name: 'status',
   },
-  { name: 'temp1', divider: 10 },
-  { name: 'temp2', divider: 10 },
-  { name: 'temp3', divider: 10 },
-  { name: 'temp4', divider: 10 },
-  { name: 'temp5', divider: 10 },
-  { name: 'temp6', divider: 10 },
+  { name: 'temp1', divider: 10, signed: true },
+  { name: 'temp2', divider: 10, signed: true },
+  { name: 'temp3', divider: 10, signed: true },
+  { name: 'temp4', divider: 10, signed: true },
+  { name: 'temp5', divider: 10, signed: true },
+  { name: 'temp6', divider: 10, signed: true },
   {
     name: 'batVoltage',
     divider: 1000,
   },
   {
     name: 'batCurrent',
-    divider: 1000,
+    divider: 100,
+    signed: true,
   },
   {
     name: 'hydrogenPressure',
     divider: 1000,
+    signed: true,
   },
-  { name: 'busPressure', divider: 1000 },
+  { name: 'busPressure', divider: 1000, signed: true },
   {
     name: 'fanRPM',
   },
@@ -89,6 +91,13 @@ const ERRORS = [
   'maxFcTemp',
   'minFcTemp',
   'thermistor',
+  'FCCurrent',
+  'FCLowPressure',
+  'FCHighPressure',
+  'FCLimit',
+  'FCError',
+  'maxBatCurrent',
+  'batError',
 ];
 
 const INPUTS = {

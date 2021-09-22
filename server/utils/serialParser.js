@@ -47,7 +47,8 @@ function parseChunk(chunk) {
       value = parseErrors(chunk.readUInt16BE(i));
       i += 2;
     } else if (packetId < 30) {
-      value = chunk.readUInt16BE(i) / (entry.divider || 1);
+      value = entry.signed ? chunk.readInt16BE(i) : chunk.readUInt16BE(i);
+      value /= entry.divider || 1;
       i += 2;
     } else {
       value = chunk[i] / (entry.divider || 1) + (entry.add || 0);

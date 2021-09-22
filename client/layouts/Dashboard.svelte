@@ -4,6 +4,7 @@
   import Timer from '../molecules/Timer.svelte';
   import Version from '../atoms/Version.svelte';
   import StateLine from '../organisms/StateLine.svelte';
+  import ErrorsLine from '../organisms/ErrorsLine.svelte';
   import CommonColumn from '../organisms/CommonColumn.svelte';
 </script>
 
@@ -16,6 +17,7 @@
     <div class="column"><BatColumn /></div>
   </div>
   <StateLine />
+  <ErrorsLine />
 </div>
 
 <style>

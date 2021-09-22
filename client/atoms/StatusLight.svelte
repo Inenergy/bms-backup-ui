@@ -1,10 +1,11 @@
 <script>
   export let status = 0;
+  export let id = '';
 
   const statuses = ['green', 'green blink', 'yellow', 'red']
 </script>
 
-<span class={statuses[status]}></span>
+<span {id} class={statuses[status]}></span>
 
 <style>
   span {

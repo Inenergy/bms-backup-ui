@@ -44,7 +44,7 @@
   {/each}
 </div>
 <div class="row">
-  <div class="column">
+  <div class="column span-2">
     Давление магистрали <strong>{$serialData.busPressure}</strong>, бар
   </div>
   <div class="column">
@@ -105,5 +105,8 @@
   .emphasize {
     font-size: 3.2em;
     font-weight: 500;
+  }
+  .span-2 {
+    height: 3em;
   }
 </style>

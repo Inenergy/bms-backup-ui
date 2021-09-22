@@ -2,7 +2,12 @@
   import { serialData } from '../stores';
   import StatusLight from '../atoms/StatusLight.svelte';
 
-  let batStatus, FCStatus, fanStatus, FCTempStatus, BMSStatus, BMSState = [];
+  let batStatus,
+    FCStatus,
+    fanStatus,
+    FCTempStatus,
+    BMSStatus,
+    BMSState = [];
 
   $: DcDcStatus = $serialData.status.DcDcOn ? 0 : 3;
 
@@ -67,25 +72,41 @@
   }
 
   function getFCTempStatus(data) {
+    const temps = Array(5)
+      .fill(0)
+      .map((_, i) => data['temp' + (i + 1)]);
     if (
-      data.FCTemp <= -100 ||
-      data.FCTemp < data.minFCTemp ||
-      data.FCTemp > data.maxFCTemp
+      temps.some((temp) => temp <= -100) ||
+      temps.some((temp) => temp < data.minFCTemp) ||
+      temps.some((temp) => temp > data.maxFCTemp)
     ) {
       FCTempStatus = 3;
     } else if (data.status.stabilizationMode != 2) {
-      const temps = Array(5).map((_, i) => data['temp' + (i + 1)]);
       const temp = data.status.stabilizationMode
         ? Math.max(...temps)
         : temps.reduce((sum, n) => sum + n, 0) / 5;
-      if (Math.abs(temp - data.stabilizationTemp) <= 3) batStatus = 0;
+      if (Math.abs(temp - data.stabilizationTemp) <= 3) FCTempStatus = 0;
       else if (Math.abs(temp - data.stabilizationTemp) <= 6) batStatus = 2;
     }
   }
 
-  function getFanStatus(data) {
+  function inRange(value, range) {
+    return value < range[1] && value > range[0];
+  }
+
+  function loadToRPMRange(load) {
     // TODO
-    return 0;
+    return [-infinity, infinity];
+  }
+
+  function getFanStatus(data) {
+    if (!data.fanRPM) {
+      fanStatus = 2;
+    } else if (!inRange(data.fanRPM, loadToRPMRange(data.fanLoad))) {
+      fanStatus = 3;
+    } else {
+      fanStatus = 0;
+    }
   }
 </script>
 
@@ -116,5 +137,13 @@
       <!-- <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} /> -->
       <StatusLight status={isOn ? BMSStatus : 0} />
     {/each}
+  </div>
+  <div class="column">
+    <label for="fan-state">Продувка</label>
+    <StatusLight status={$serialData.status.wasPurged || undefined} />
+  </div>
+  <div class="column">
+    <label for="fan-state">Закоротка</label>
+    <StatusLight status={$serialData.status.wasCS || undefined} />
   </div>
 </div>

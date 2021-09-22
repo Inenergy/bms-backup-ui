@@ -26,7 +26,7 @@
   {#each ERRORS as key, i}
     <div class="column">
       <label for={key}>{labels[i]}</label>
-      <StatusLight id={key} status={errors[key] && 3} />
+      <StatusLight id={key} status={errors[key] ? 3 : 0} />
     </div>
   {/each}
 </div>

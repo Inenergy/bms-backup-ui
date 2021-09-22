@@ -51,7 +51,8 @@ function parseChunk(chunk) {
       value /= entry.divider || 1;
       i += 2;
     } else {
-      value = chunk[i] / (entry.divider || 1) + (entry.add || 0);
+      value = entry.signed ? chunk.readInt8(i) : chunk[i];
+      value = value / (entry.divider || 1) + (entry.add || 0);
       i += 1;
     }
     parsedBytes[entry.name] = value;

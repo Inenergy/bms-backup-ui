@@ -1,8 +1,8 @@
 const STATE_DATA = [
   { name: 'minPressure', divider: 0.1 },
   { name: 'maxPressure', divider: 0.1 },
-  { name: 'minFCTemp' },
-  { name: 'maxFCTemp' },
+  { name: 'minFCTemp', signed: true },
+  { name: 'maxFCTemp', signed: true },
   { name: 'purgeDuration', divider: 0.1 },
   { name: 'purgeDelay' },
   { name: 'limitPressure', divider: 0.1 },
@@ -20,7 +20,7 @@ const STATE_DATA = [
   { name: 'PStabilizationCoefficient', divider: 100 },
   { name: 'IStabilizationCoefficient', divider: 100 },
   { name: 'DStabilizationCoefficient', divider: 100 },
-  { name: 'fanLoadCorrective' },
+  { name: 'fanLoadCorrective', signed: true },
   { name: 'maxBatCurrent', divider: 2 },
   { name: 'currentStabilizationTemp' },
 ];

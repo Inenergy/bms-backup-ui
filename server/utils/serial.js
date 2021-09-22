@@ -28,7 +28,6 @@ let failedAttempts = 0;
 
 function sendCommand(id, value) {
   const buf = Buffer.from([0x10, id, value]);
-  if (value < 0) buf.writeInt8(value, 2);
   commandQueue.push(buf);
   if (!portBusy) {
     portBusy = true;

@@ -37,7 +37,8 @@ function parseChunk(chunk) {
     packetId < 30 ? ((packetId - 3) / 4) * 3 : ((packetId - 39) / 4) * 6 + 18;
   const parsedBytes = {};
   let i = 1;
-  while (i < 7) {
+  let checkSum = chunk[0];
+  while (i < 6) {
     const entry = SERIAL_DATA[entryIdx];
     let value;
     if (entryIdx === 2) {
@@ -56,9 +57,16 @@ function parseChunk(chunk) {
       i += 1;
     }
     parsedBytes[entry.name] = value;
+    checkSum += value;
     entryIdx++;
   }
-  return parsedBytes;
+  checkSum %= 256;
+  if (checkSum == chunk[i]) {
+    return parsedBytes;
+  }
+  else {
+    throw new Error(`Checksums don't match expected: ${checkSum}, recieved: ${chunk[i]}`)
+  }
 }
 
 module.exports = function parse(bytes) {

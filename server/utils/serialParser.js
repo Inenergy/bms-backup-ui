@@ -66,7 +66,7 @@ function parseChunk(chunk) {
     entryIdx++;
   }
   checkSum %= 256 ** 2;
-  const recievedCheckSum = chunk.readUInt16BE(5)
+  const recievedCheckSum = chunk.readInt16BE(5)
   if (checkSum == recievedCheckSum) {
     return parsedBytes;
   } else {

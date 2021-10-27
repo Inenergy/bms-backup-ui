@@ -33,39 +33,46 @@ function parseStatus(status) {
 
 function parseChunk(chunk) {
   let packetId = chunk[0];
+  const idThreshold = 39;
   let entryIdx =
-    packetId < 30 ? ((packetId - 3) / 4) * 3 : ((packetId - 39) / 4) * 6 + 18;
+    packetId < idThreshold ? ((packetId - 3) / 4) * 2 : ((packetId - 39) / 4) * 4 + 18;
   const parsedBytes = {};
   let i = 1;
-  let checkSum = chunk[0];
-  while (i < 6) {
+  let checkSum = 0;
+  while (i < 5) {
     const entry = SERIAL_DATA[entryIdx];
     let value;
+    let rawValue;
+    if (packetId < idThreshold) {
+      rawValue = entry.signed ? chunk.readInt16BE(i) : chunk.readUInt16BE(i);
+    } else {
+      rawValue = entry.signed ? chunk.readInt8(i) : chunk[i];
+    }
     if (entryIdx === 2) {
-      value = parseStatus(chunk.readUInt16BE(i));
+      value = parseStatus(rawValue);
       i += 2;
     } else if (entryIdx === 14) {
-      value = parseErrors(chunk.readUInt16BE(i));
+      value = parseErrors(rawValue);
       i += 2;
-    } else if (packetId < 30) {
-      value = entry.signed ? chunk.readInt16BE(i) : chunk.readUInt16BE(i);
-      value /= entry.divider || 1;
+    } else if (packetId < idThreshold) {
+      value = rawValue / (entry.divider || 1);
       i += 2;
     } else {
-      value = entry.signed ? chunk.readInt8(i) : chunk[i];
-      value = value / (entry.divider || 1) + (entry.add || 0);
+      value = rawValue / (entry.divider || 1) + (entry.add || 0);
       i += 1;
     }
     parsedBytes[entry.name] = value;
-    checkSum += value;
+    checkSum += rawValue;
     entryIdx++;
   }
-  checkSum %= 256;
-  if (checkSum == chunk[i]) {
+  checkSum %= 256 ** 2;
+  const recievedCheckSum = chunk.readUInt16BE(5)
+  if (checkSum == recievedCheckSum) {
     return parsedBytes;
-  }
-  else {
-    throw new Error(`Checksums don't match expected: ${checkSum}, recieved: ${chunk[i]}`)
+  } else {
+    throw new Error(
+      `Checksums don't match expected: ${checkSum}, recieved: ${recievedCheckSum}`
+    );
   }
 }
 

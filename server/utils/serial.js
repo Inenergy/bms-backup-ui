@@ -27,7 +27,7 @@ let portBusy = false;
 let failedAttempts = 0;
 
 function sendCommand(id, value) {
-  const buf = Buffer.from([0x10, id, value]);
+  const buf = Buffer.from([0x10, id, value, id + value + 0x10]);
   commandQueue.push(buf);
   if (!portBusy) {
     portBusy = true;

@@ -45,8 +45,10 @@ function parseChunk(chunk) {
     let rawValue;
     if (packetId < idThreshold) {
       rawValue = entry.signed ? chunk.readInt16BE(i) : chunk.readUInt16BE(i);
+      checkSum += chunk.readUInt16BE(i)
     } else {
       rawValue = entry.signed ? chunk.readInt8(i) : chunk[i];
+      checkSum += chunk[i]
     }
     if (entryIdx === 2) {
       value = parseStatus(rawValue);
@@ -62,11 +64,10 @@ function parseChunk(chunk) {
       i += 1;
     }
     parsedBytes[entry.name] = value;
-    checkSum += rawValue;
     entryIdx++;
   }
   checkSum %= 256 ** 2;
-  const recievedCheckSum = chunk.readInt16BE(5)
+  const recievedCheckSum = chunk.readUInt16BE(5)
   if (checkSum == recievedCheckSum) {
     return parsedBytes;
   } else {

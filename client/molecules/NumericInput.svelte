@@ -12,8 +12,8 @@
   const range = INPUTS[name].constraints;
   const step = INPUTS[name].step || 1;
 
-  $: min = range[0];
-  $: max = range[1];
+  const min = range[0];
+  const max = range[1];
 
   serialData.subscribe(updateValueIfNecessary);
 

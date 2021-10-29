@@ -32,18 +32,21 @@ client.on('serial data', (packet) => {
     for (let key in packet) {
       data[key] = packet[key];
     }
-    chargePercent.set(
-      Math.max(
-        0,
-        ((packet.batVoltage - packet.minBatVoltage) /
-          (packet.maxBatVoltage - packet.minBatVoltage)) *
-          100
-      ).toFixed(1)
-    );
+    resetChargePercent(data);
     return data;
   });
 });
 
+function resetChargePercent(data) {
+  chargePercent.set(
+    Math.max(
+      0,
+      ((data.batVoltage - data.minBatVoltage) /
+        (data.maxBatVoltage - data.minBatVoltage)) *
+        100
+    ).toFixed(1)
+  );
+}
 
 function getValue(store) {
   let $val;

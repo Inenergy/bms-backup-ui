@@ -34,8 +34,8 @@ function writeRow(boosterState) {
 function getLogRow(serialData) {
   const row = [
     new Date().toTimeString().slice(0, 8),
-    ...SERIAL_DATA.map((entry) => serialData[entry.name]??'').flatMap((v) =>
-      typeof v == 'object' ? Object.values(v) : v
+    ...SERIAL_DATA.map((entry) => serialData[entry.name]??'').map((v) =>
+      typeof v == 'object' ? Object.values(v).join(' ') : v
     ),
   ];
   return row.join('\t') + '\r\n';

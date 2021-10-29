@@ -96,7 +96,7 @@
 
   function loadToRPMRange(load) {
     // TODO
-    return [-infinity, infinity];
+    return [-Infinity, Infinity];
   }
 
   function getFanStatus(data) {

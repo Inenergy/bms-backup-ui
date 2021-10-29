@@ -59,10 +59,8 @@
     const maxThreshold = max - diff * 0.1;
     if (data.FCCurrent >= max) {
       FCStatus = 3;
-    } else if (data.FCCurrent > maxThreshold && data.FCCurrent < min) {
+    } else if (!data.status.FCOn) {
       FCStatus = 2;
-    } else if (data.status.FCOn) {
-      FCStatus = 1;
     } else if (
       data.FCVoltage > data.minFCVoltage &&
       data.FCCurrent < maxThreshold
@@ -76,7 +74,6 @@
       .fill(0)
       .map((_, i) => data['temp' + (i + 1)]);
     if (
-      temps.some((temp) => temp <= -100) ||
       temps.some((temp) => temp < data.minFCTemp) ||
       temps.some((temp) => temp > data.maxFCTemp)
     ) {
@@ -86,7 +83,7 @@
         ? Math.max(...temps)
         : temps.reduce((sum, n) => sum + n, 0) / 5;
       if (Math.abs(temp - data.stabilizationTemp) <= 3) FCTempStatus = 0;
-      else if (Math.abs(temp - data.stabilizationTemp) <= 6) batStatus = 2;
+      else batStatus = 2;
     }
   }
 

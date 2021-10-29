@@ -12,7 +12,7 @@ const dataMap = SERIAL_DATA.reduce((a, e) => {
 for (const key in dataMap) dataMap[key] = 0;
 
 dataMap.maxBatVoltage = 100;
-dataMap.minBatVoltage = 0;
+dataMap.minBatVoltage = 41;
 dataMap.temp5 = 0;
 dataMap.maxFCTemp = 1;
 dataMap.status = {

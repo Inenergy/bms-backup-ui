@@ -58,16 +58,16 @@ test('parses errors data correctly', () => {
 
 test('parses state data correctly', () => {
   const bytes = Buffer.from([
-    39, 200, 154, 34, 32, 1, 164, 43, 192, 2, 154, 34, 1, 126,
+    39, 200, 154, 34, 32, 1, 164, 55, 192, 2, 154, 34, 1, 126,
   ]);
   expect(parse(bytes)).toEqual({
     minPressure: 2000,
     maxPressure: 1540,
     minFCTemp: 34,
     maxFCTemp: 32,
-    purgeDuration: 1920,
-    purgeDelay: 2,
-    limitPressure: 1540,
-    fanLoad: 34,
+    minBatVoltage: 59.2,
+    maxBatVoltage: 40.2,
+    PStabilizationCoefficient: 1.54,
+    IStabilizationCoefficient: 0.34,
   });
 });

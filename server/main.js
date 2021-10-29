@@ -32,7 +32,7 @@ serial
   );
 
 function convertCommandAndSendSerialCommand(name, value) {
-  if (typeof(value) != 'number') return;
+  if (typeof value != 'number') return;
   const input = INPUTS[name];
   value = Math.min(Math.max(value, input.constraints[0]), input.constraints[1]);
   value -= input.subtract || 0;
@@ -50,11 +50,9 @@ logger.start().then(() => {
 
 wsServer.on('connection', (socket) => {
   wsSockets.push(socket);
-  socket.emit('time', new Date().toLocaleString('ru-RU'));
-  socket.on(
-    'disconnect',
-    () => (wsSockets = wsSockets.filter((sock) => sock.id !== socket.id))
-  );
+  socket.on('disconnect', () => {
+    wsSockets = wsSockets.filter((sock) => sock.id !== socket.id);
+  });
   socket.on('check update', () => {
     updater
       .checkUpdate()
@@ -74,11 +72,19 @@ wsServer.on('connection', (socket) => {
 
 // upate time every second
 
-setInterval(() => {
-  wsSockets.forEach((sock) =>
-    sock.emit('time', new Date().toLocaleString('ru-RU'))
-  );
-}, 1000);
+function updateTime() {
+  const date = new Date();
+  for (const sock of wsSockets)
+    sock.emit(
+      'time',
+      `${date.getDay()}.${
+        date.getMonth() + 1
+      }.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    );
+  return setTimeout(updateTime, 1000);
+}
+
+updateTime();
 
 // routes
 

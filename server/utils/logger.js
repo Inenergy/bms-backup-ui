@@ -8,10 +8,10 @@ const tableHeader =
   ['Time']
     .concat(
       SERIAL_DATA.map(
-        (entry) => `${entry.label}${entry.units ? ', ' + entry.units : ''}`
+        (entry) => `${entry.name}${entry.units ? ', ' + entry.units : ''}`
       )
     )
-    .join('\t') + '/r/n';
+    .join('\t') + '\r\n';
 
 async function start() {
   const logDir = 'logs';
@@ -33,8 +33,10 @@ function writeRow(boosterState) {
 
 function getLogRow(serialData) {
   const row = [
-    new Date().toLocaleTimeString('ru-RU'),
-    ...Object.values(serialData),
+    new Date().toTimeString().slice(0, 8),
+    ...SERIAL_DATA.map((entry) => serialData[entry.name]??'').flatMap((v) =>
+      typeof v == 'object' ? Object.values(v) : v
+    ),
   ];
   return row.join('\t') + '\r\n';
 }

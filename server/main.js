@@ -43,8 +43,8 @@ function convertCommandAndSendSerialCommand(name, value) {
 // logger initialization
 const logger = require('./utils/logger');
 logger.start().then(() => {
-  serial.on('data', logger.writeRow)
-})
+  serial.on('data', logger.writeRow);
+});
 
 // socket connection handling
 
@@ -77,9 +77,7 @@ function updateTime() {
   for (const sock of wsSockets)
     sock.emit(
       'time',
-      `${date.getDay()}.${
-        date.getMonth() + 1
-      }.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      `${date.toISOString().slice(0, 10)}T${date.toTimeString().slice(0, 8)}`
     );
   return setTimeout(updateTime, 1000);
 }

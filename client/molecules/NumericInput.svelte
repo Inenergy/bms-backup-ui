@@ -11,6 +11,7 @@
 
   const range = INPUTS[name].constraints;
   const step = INPUTS[name].step || 1;
+  const precision = Math.abs(Math.min(0, +step.toExponential().slice(-2)));
 
   const min = range[0];
   const max = range[1];
@@ -24,8 +25,7 @@
   }
 
   function normalizeValue() {
-    value = Math.max(min, Math.min(value, max));
-    value = Math.round(value / step) * step;
+    value = Number(Math.max(min, Math.min(value, max)).toPrecision(precision));
     onChange(name, value);
   }
 </script>
@@ -50,7 +50,7 @@
 
 <style>
   label {
-    display: inline-block; 
+    display: inline-block;
   }
   input {
     width: 5em;

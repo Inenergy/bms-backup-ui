@@ -1,5 +1,5 @@
 <script>
-  import { serialData } from '../stores';
+  import { serialData, chargePercent } from '../stores';
   import StatusLight from '../atoms/StatusLight.svelte';
 
   let batStatus,
@@ -12,12 +12,13 @@
   $: DcDcStatus = $serialData.status.DcDcOn ? 0 : 3;
 
   serialData.subscribe((data) => {
-    getBatStatus(data);
     getFCStatus(data);
     getFCTempStatus(data);
     getFanStatus(data);
     getBMSStatus(data);
   });
+
+  chargePercent.subscribe(getBatStatus);
 
   function getBMSStatus(data) {
     let counter = 0;
@@ -34,22 +35,11 @@
     }
   }
 
-  function getBatStatus(data) {
-    const min = Math.ceil(data.minBatVoltage * 10) / 10;
-    const max = Math.floor(data.maxBatVoltage * 10) / 10;
-    const diff = max - min;
-    const minThreshold = min + diff * 0.1;
-    const maxThreshold = max - diff * 0.1;
-    if (data.batVoltage >= max || data.batVoltage <= min) {
-      batStatus = 3;
-    } else if (
-      data.batVoltage < maxThreshold &&
-      data.batVoltage > minThreshold
-    ) {
-      batStatus = 0;
-    } else {
-      batStatus = 2;
-    }
+  function getBatStatus(charge) {
+    charge = Number(charge);
+    if (charge >= 100 || charge <= 0) batStatus = 3;
+    else if (charge > 90 || charge < 10) batStatus = 2;
+    else batStatus = 0;
   }
 
   function getFCStatus(data) {

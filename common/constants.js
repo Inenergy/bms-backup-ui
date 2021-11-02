@@ -169,17 +169,17 @@ const INPUTS = {
     constraints: [0, 100],
   },
   PStabilizationCoefficient: {
-    constraints: [0.1, 2.5],
+    constraints: [0, 2.5],
     step: 0.05,
     multiplier: 100,
   },
   IStabilizationCoefficient: {
-    constraints: [0.1, 2],
+    constraints: [0, 2.5],
     step: 0.05,
     multiplier: 100,
   },
   DStabilizationCoefficient: {
-    constraints: [0.1, 2.5],
+    constraints: [0, 2.5],
     step: 0.05,
     multiplier: 100,
   },

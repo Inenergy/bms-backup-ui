@@ -11,7 +11,7 @@
 
   const range = INPUTS[name].constraints;
   const step = INPUTS[name].step || 1;
-  const precision = Math.abs(Math.min(0, +step.toExponential().slice(-2)));
+  const precision = Math.abs(Math.min(-1, +step.toExponential().slice(-2)));
 
   const min = range[0];
   const max = range[1];

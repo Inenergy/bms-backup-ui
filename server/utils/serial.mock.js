@@ -37,6 +37,7 @@ function generateData() {
     'batVoltage',
     'fanLoadCorrective',
     'fanLoad',
+    'maxFCTemp',
   ])
     dataMap[key] = +(Math.random() * 100).toFixed(3);
   return dataMap;

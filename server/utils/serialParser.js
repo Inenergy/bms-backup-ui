@@ -72,7 +72,7 @@ function parseChunk(chunk) {
     return parsedBytes;
   } else {
     throw new Error(
-      `Checksums don't match expected: ${checkSum}, recieved: ${recievedCheckSum}`
+      `Checksums in packet ${packetId} don't match expected: ${checkSum}, recieved: ${recievedCheckSum}`
     );
   }
 }

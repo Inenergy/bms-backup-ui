@@ -6,7 +6,7 @@ exports.isPi = IS_RPI;
 
 exports.PORT = {
   name: IS_RPI ? '/dev/serial0' : 'COM17',
-  baudRate: 230400,
+  baudRate: 250000,
 };
 
 exports.CONFIG_PATH = path.join(__dirname, '..', 'config');

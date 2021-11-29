@@ -43,17 +43,13 @@
   }
 
   function getFCStatus(data) {
-    const min = Math.ceil(data.minFCCurrent * 10) / 10;
-    const max = Math.floor(data.maxFCCurrent * 10) / 10;
-    const diff = max - min;
-    const maxThreshold = max - diff * 0.1;
-    if (data.FCCurrent >= max) {
+    if (data.FCCurrent >= data.maxFCCurrent) {
       FCStatus = 3;
     } else if (!data.status.FCOn) {
       FCStatus = 2;
     } else if (
       data.FCVoltage > data.minFCVoltage &&
-      data.FCCurrent < maxThreshold
+      data.FCCurrent < data.maxFCCurrent * 0.9
     ) {
       FCStatus = 0;
     }
@@ -70,10 +66,10 @@
       FCTempStatus = 3;
     } else if (data.status.stabilizationMode != 2) {
       const temp = data.status.stabilizationMode
-        ? Math.max(...temps)
-        : temps.reduce((sum, n) => sum + n, 0) / 5;
-      if (Math.abs(temp - data.stabilizationTemp) <= 3) FCTempStatus = 0;
-      else batStatus = 2;
+        ? temps.reduce((sum, n) => sum + n, 0) / 5 // 1 for mid temp
+        : Math.max(...temps); // 0 for max temp
+      if (Math.abs(temp - data.stabilizationTemp) > 3) FCTempStatus = 2;
+      else FCTempStatus = 0;
     }
   }
 

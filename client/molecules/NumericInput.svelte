@@ -25,7 +25,7 @@
   }
 
   function normalizeValue() {
-    value = Number(Math.max(min, Math.min(value, max)).toPrecision(precision));
+    value = Number(Math.max(min, Math.min(value, max)).toFixed(precision));
     onChange(name, value);
   }
 </script>

@@ -127,10 +127,10 @@
   </div>
   <div class="column">
     <label for="fan-state">Продувка</label>
-    <StatusLight status={$serialData.status.wasPurged || undefined} />
+    <StatusLight status={$serialData.status.wasPurged ? 0 : void 0} />
   </div>
   <div class="column">
     <label for="fan-state">Закоротка</label>
-    <StatusLight status={$serialData.status.wasCS || undefined} />
+    <StatusLight status={$serialData.status.wasCS ? 0 : void 0} />
   </div>
 </div>

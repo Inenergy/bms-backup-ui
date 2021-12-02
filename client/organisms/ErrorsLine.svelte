@@ -3,6 +3,8 @@
   import StatusLight from '../atoms/StatusLight.svelte';
   import { ERRORS } from '../../common/constants';
 
+  const warnings = ['minFcTemp'];
+
   $: errors = $serialData.errors;
 
   const labels = [
@@ -12,7 +14,7 @@
     'Макс температура ТЭ',
     'Мин температура ТЭ',
     'Обрыв термистора',
-    'Ток АКБ',
+    'Ток ТЭ',
     'Высокое давление ТЭ',
     'Низкое давление ТЭ',
     'Отсечка ТЭ',
@@ -26,7 +28,10 @@
   {#each ERRORS as key, i}
     <div class="column">
       <label for={key}>{labels[i]}</label>
-      <StatusLight id={key} status={errors[key] ? 3 : 0} />
+      <StatusLight
+        id={key}
+        status={errors[key] ? (warnings.includes(key) ? 2 : 3) : 0}
+      />
     </div>
   {/each}
 </div>

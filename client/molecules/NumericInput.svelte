@@ -2,6 +2,7 @@
   import { serialData } from '../stores';
   import onChange from '../utils/inputHandler';
   import { INPUTS } from '../../common/constants';
+  import { __ } from '../utils/translator';
   export let attrs = {};
 
   const { name, label, units } = attrs;
@@ -27,24 +28,26 @@
   function normalizeValue() {
     value = Number(Math.max(min, Math.min(value, max)).toPrecision(precision));
     onChange(name, value);
+    updateBlocked = false;
   }
+
+  const blockUpdates = () => (updateBlocked = true);
 </script>
 
 <label>
-  <span>{label}</span>
+  <span>{$__(label)}</span>
   <input
     type="number"
     bind:value
     on:change={normalizeValue}
-    on:focus={() => (updateBlocked = true)}
-    on:blur={() => (updateBlocked = false)}
+    on:input={blockUpdates}
     {name}
     {step}
     {min}
     {max}
   />
   {#if units}
-    <em> {units}</em>
+    <em> {$__(units)}</em>
   {/if}
 </label>
 

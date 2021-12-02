@@ -3,6 +3,7 @@
   import { STABILIZATION_MODES } from '../../common/constants';
   import Input from '../molecules/NumericInput.svelte';
   import sendSerialCommand from '../utils/inputHandler';
+  import { __ } from '../utils/translator';
 
   const stabilizationOptions = STABILIZATION_MODES.map((name, i) => ({
     name,
@@ -17,14 +18,14 @@
   }
 
   const limitsRow = [
-    { name: 'minBatVoltage', label: 'Мин напр', units: 'В' },
-    { name: 'maxBatVoltage', label: 'Макс напр', units: 'В' },
-    { name: 'maxBatCurrent', label: 'Макс ток', units: 'A' },
+    { name: 'minBatVoltage', label: 'min voltage', units: 'V' },
+    { name: 'maxBatVoltage', label: 'max voltage', units: 'V' },
+    { name: 'maxBatCurrent', label: 'max current', units: 'A' },
   ];
 
   const voltageThresholdRow = [
-    { name: 'minBatVoltageThreshold', label: 'Напр вкл ТЭ', units: 'В' },
-    { name: 'maxBatVoltageThreshold', label: 'Напр выкл ТЭ', units: 'В' },
+    { name: 'minBatVoltageThreshold', label: 'FC on threshold voltage', units: 'V' },
+    { name: 'maxBatVoltageThreshold', label: 'FC off threshold voltage', units: 'V' },
   ];
 
   const coefficientsRow = [
@@ -34,18 +35,18 @@
   ];
 
   const tempLimitsRow = [
-    { name: 'minFCTemp', label: 'Мин', units: 'C' },
-    { name: 'maxFCTemp', label: 'Макс', units: 'C' },
+    { name: 'minFCTemp', label: 'min', units: 'C' },
+    { name: 'maxFCTemp', label: 'max', units: 'C' },
   ];
 </script>
 
-<h2>АКБ</h2>
+<h2>{$__('battery')}</h2>
 <div class="row">
   <div class="column">
-    <span class="emphasize">{$serialData.batVoltage.toFixed(2)}В</span>
+    <span class="emphasize">{$serialData.batVoltage.toFixed(2)}{$__('V')}</span>
   </div>
   <div class="column">
-    <span class="emphasize">{$serialData.batCurrent.toFixed(2)}А</span>
+    <span class="emphasize">{$serialData.batCurrent.toFixed(2)}{$__('A')}</span>
   </div>
   <div class="column">
     <span class="emphasize">{$chargePercent}%</span>
@@ -69,7 +70,7 @@
 
 <div class="row">
   <div class="column">
-    <strong>Вентилятор {$serialData.fanLoad}% + </strong>
+    <strong>{$__('fan')} {$serialData.fanLoad}% + </strong>
     <Input
       attrs={{
         label: ``,
@@ -80,12 +81,12 @@
   </div>
   <div class="column">
     {$serialData.fanRPM}
-    об/мин
+    {$__('rpm', false)}
   </div>
 </div>
 
 <div class="row">
-  <div class="column">Коэфф. стабилизации</div>
+  <div class="column">{$__('stabilization coefficient')}</div>
   {#each coefficientsRow as input}
     <div class="column column-25">
       <Input attrs={input} />
@@ -95,7 +96,7 @@
 
 <div class="row">
   <label>
-    Режим стабилизации
+    {$__('stabilization mode')}
     <select name="stabilizationMode" on:change={changeStablizationMode}>
       {#each stabilizationOptions as option}
         <option
@@ -108,7 +109,7 @@
 </div>
 
 <div class="row">
-  <div class="column">Пределы t ТЭ</div>
+  <div class="column">{$__('FC temperature limits')}</div>
   {#each tempLimitsRow as input}
     <div class="column column-33">
       <Input attrs={input} />

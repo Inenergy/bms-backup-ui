@@ -216,12 +216,12 @@ for (let key in INPUTS) {
 
 const SERIAL_DATA = [...PARAMS_DATA, ...STATE_DATA];
 
-const OPERATION_MODES = ['Авто', 'Только АКБ', 'Только ТЭ'];
+const OPERATION_MODES = ['auto', 'only battery', 'only FC'];
 
 const STABILIZATION_MODES = [
-  'По верхней t',
-  'По средней t',
-  'Стаб откл, вент макс',
+  'max temeprature',
+  'mid temperature',
+  'stabilization off',
 ];
 
 module.exports = {

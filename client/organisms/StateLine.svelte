@@ -1,6 +1,7 @@
 <script>
   import { serialData, chargePercent } from '../stores';
   import StatusLight from '../atoms/StatusLight.svelte';
+  import { __ } from '../utils/translator';
 
   let batStatus,
     FCStatus,
@@ -99,15 +100,15 @@
 
 <div class="row">
   <div class="column">
-    <label for="bat-state">АКБ</label>
+    <label for="bat-state">{$__('battery')}</label>
     <StatusLight status={batStatus} />
   </div>
   <div class="column">
-    <label for="fc-state">ТЭ ЭЛ</label>
+    <label for="fc-state">{$__('fc electro')}</label>
     <StatusLight status={FCStatus} />
   </div>
   <div class="column">
-    <label for="fc-temp-state">ТЭ Темп</label>
+    <label for="fc-temp-state">{$__('fc temp')}</label>
     <StatusLight status={FCTempStatus} />
   </div>
   <div class="column">
@@ -115,7 +116,7 @@
     <StatusLight status={DcDcStatus} />
   </div>
   <div class="column">
-    <label for="fan-state">Вентилятор</label>
+    <label for="fan-state">{$__('fan')}</label>
     <StatusLight status={fanStatus} />
   </div>
   <div class="column">
@@ -126,11 +127,11 @@
     {/each}
   </div>
   <div class="column">
-    <label for="fan-state">Продувка</label>
+    <label for="fan-state">{$__('purge')}</label>
     <StatusLight status={$serialData.status.wasPurged ? 0 : void 0} />
   </div>
   <div class="column">
-    <label for="fan-state">Закоротка</label>
+    <label for="fan-state">{$__('short')}</label>
     <StatusLight status={$serialData.status.wasCS ? 0 : void 0} />
   </div>
 </div>

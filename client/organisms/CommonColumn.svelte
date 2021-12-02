@@ -2,6 +2,7 @@
   import { serialData } from '../stores';
   import sendSerialCommand from '../utils/inputHandler';
   import { OPERATION_MODES } from '../../common/constants';
+  import { __ } from '../utils/translator';
 
   const modeOptions = OPERATION_MODES.map((name, i) => ({ name, value: i + 1 }));
 
@@ -14,7 +15,7 @@
 </script>
 
 <div class="row">
-<h3>Режим работы</h3>
+<h3>{$__('operation mode')}</h3>
 <select name="operationMode" on:change={handleInput}>
   {#each modeOptions as option}
     <option
@@ -24,7 +25,7 @@
   {/each}
 </select>
 
-<h4>Температура воздуха {$serialData.temp6}</h4>
+<h4>{$__('air tempertature')} {$serialData.temp6}</h4>
 </div>
 
 

@@ -81,6 +81,7 @@ const generateLocaleLoader = url => async () => {
 
 translator.register('ru', generateLocaleLoader('/locale/ru'));
 translator.register('en', generateLocaleLoader('/locale/en'));
-translator.setLocale(navigator.language.slice(0, 2));
+// translator.setLocale(navigator.language.slice(0, 2));
+translator.setLocale('en');
 
 module.exports = translator;

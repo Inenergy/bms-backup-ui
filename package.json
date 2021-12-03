@@ -4,7 +4,7 @@
   "description": "Simple GUI for fuel cell BMS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SonikDropout/booster-ui"
+    "url": "https://github.com/SonikDropout/bms-backup-ui"
   },
   "scripts": {
     "build": "rollup -c",

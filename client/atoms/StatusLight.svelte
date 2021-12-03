@@ -1,24 +1,33 @@
 <script>
   export let status = 0;
-  export let id = '';
+  export let label = '';
+  import { __ } from '../utils/translator';
 
-  const statuses = ['green', 'green blink', 'yellow', 'red']
+  const statuses = ['green', 'green blink', 'yellow', 'red'];
 </script>
 
-<span {id} class={statuses[status]}></span>
+<span class={statuses[status]}>
+  {$__(label)}
+</span>
 
 <style>
   span {
-    width: 2rem;
-    height: 2rem;
+    display: flex;
+    height: 100%;
+    min-height: 4em;
+    position: relative;
+    width: 100%;
     background-color: lightgrey;
-    border: 1px solid;
-    display: inline-block;
-    border-radius: 50%;
-    margin-left: 0.8rem;
+    border-radius: 0.4rem;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    padding: 0 0.4rem;
   }
   .red {
-    background-color: #E10600;
+    background-color: #e10600;
   }
   .yellow {
     background-color: #ffc107;

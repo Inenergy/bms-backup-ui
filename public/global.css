@@ -5,3 +5,7 @@
 h2 {
   text-align: center;
 }
+fieldset {
+  border-width: revert;
+  padding: revert;
+}

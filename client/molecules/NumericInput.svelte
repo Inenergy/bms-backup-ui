@@ -3,6 +3,7 @@
   import onChange from '../utils/inputHandler';
   import { INPUTS } from '../../common/constants';
   import { __ } from '../utils/translator';
+  import LabeledElement from '../atoms/LabeledElement.svelte';
   export let attrs = {};
 
   const { name, label, units } = attrs;
@@ -33,8 +34,7 @@
   const blockUpdates = () => (updateBlocked = true);
 </script>
 
-<label>
-  <span>{$__(label)}</span>
+<LabeledElement {label} {units}>
   <input
     type="number"
     bind:value
@@ -45,16 +45,12 @@
     {min}
     {max}
   />
-  {#if units}
-    <em> {$__(units)}</em>
-  {/if}
-</label>
+</LabeledElement>
 
 <style>
-  label {
-    display: inline-block;
-  }
   input {
     width: 5em;
+    height: 2.8rem;
+    border-radius: 0.2rem;
   }
 </style>

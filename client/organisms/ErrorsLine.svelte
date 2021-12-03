@@ -4,6 +4,10 @@
   import { ERRORS } from '../../common/constants';
   import { __ } from '../utils/translator';
 
+  const displayErrors = ERRORS;
+  const l = displayErrors.length - 2;
+  displayErrors[l] = displayErrors.splice(l - 1, 1, displayErrors[l])[0];
+
   const warnings = ['minFcTemp'];
 
   $: errors = $serialData.errors;
@@ -18,19 +22,18 @@
     'FC current',
     'high FC pressure',
     'low FC pressure',
-    'limit FC',
-    'FC error',
+    'Line Pressure',
     'max battery current',
+    'FC error',
     'battery error',
   ];
 </script>
 
 <div class="row">
-  {#each ERRORS as key, i}
+  {#each displayErrors as key, i}
     <div class="column">
-      <label for={key}>{$__(labels[i])}</label>
       <StatusLight
-        id={key}
+        label={labels[i]}
         status={errors[key] ? (warnings.includes(key) ? 2 : 3) : 0}
       />
     </div>

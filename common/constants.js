@@ -9,7 +9,7 @@ const STATE_DATA = [
   { name: 'fanLoad' },
   { name: 'CSDuration' },
   { name: 'CSDelay' },
-  { name: 'CSShift' },
+  { name: 'purgeShift' },
   { name: 'minBatVoltageThreshold', divider: 10, add: 40 },
   { name: 'maxBatVoltageThreshold', divider: 10, add: 40 },
   { name: 'maxFCCurrent' },
@@ -94,7 +94,7 @@ const ERRORS = [
   'FCCurrent',
   'FCLowPressure',
   'FCHighPressure',
-  'FCLimit',
+  'LinePressure',
   'FCError',
   'maxBatCurrent',
   'batError',
@@ -165,7 +165,7 @@ const INPUTS = {
   CSDelay: {
     constraints: [0, 100],
   },
-  CSShift: {
+  purgeShift: {
     constraints: [0, 100],
   },
   PStabilizationCoefficient: {

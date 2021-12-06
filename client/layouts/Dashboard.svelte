@@ -36,7 +36,11 @@
                 </LabeledElement>
               {:else if param.name == 'fanLoadCorrective'}
                 <NumericInput attrs={param}>
-                  <span id="fanLoad">{$serialData.fanLoad}</span>/
+                  <span class="input-appendix">{$serialData.fanLoad}</span>/
+                </NumericInput>
+              {:else if param.name == 'stabilizationTemp'}
+                <NumericInput attrs={param}>
+                  <span class="input-appendix">{$serialData.currentStabilizationTemp}</span>/
                 </NumericInput>
               {:else if param.type == 'info'}
                 <Value {...param} />
@@ -61,7 +65,7 @@
   legend {
     font-size: 1.2em;
   }
-  #fanLoad {
+  .input-appendix {
     min-width: 3em;
     display: inline-block;
   }

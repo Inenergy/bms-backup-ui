@@ -42,7 +42,7 @@ module.exports = [
           name: 'CSDuration',
           type: 'input',
           label: 'short duration',
-          units: 's',
+          units: 'ms',
         },
         { name: 'CSDelay', type: 'input', label: 'short delay', units: 's' },
         { name: 'allowCS', type: 'checkbox', label: 'short allowed' },

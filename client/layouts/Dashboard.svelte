@@ -38,10 +38,6 @@
                 <NumericInput attrs={param}>
                   <span class="input-appendix">{$serialData.fanLoad}</span>/
                 </NumericInput>
-              {:else if param.name == 'stabilizationTemp'}
-                <NumericInput attrs={param}>
-                  <span class="input-appendix">{$serialData.currentStabilizationTemp}</span>/
-                </NumericInput>
               {:else if param.type == 'info'}
                 <Value {...param} />
               {:else if param.type == 'input'}

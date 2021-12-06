@@ -52,7 +52,7 @@ function parseChunk(chunk) {
       rawValue = entry.signed ? chunk.readInt8(i) : chunk[i];
       checkSum += chunk[i];
     }
-    checkSum %= 2 ** 16;
+    checkSum = checkSum & 0xffff;
     if (entryIdx === 2) {
       value = parseStatus(rawValue);
       i += 2;

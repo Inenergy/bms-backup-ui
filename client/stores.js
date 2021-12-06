@@ -21,7 +21,7 @@ const connectionEstablished = new Promise((resolve, reject) => {
   client.on('connect_error', reject);
 });
 
-Promise.all([localeLoaded, connectionEstablished])
+Promise.all([localeLoaded])
   .then(() => {
     appInitialized.set(true);
   })

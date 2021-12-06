@@ -15,9 +15,10 @@ function handleData(incomingBuffer) {
   if (!(storedBuffer.length % 7)) {
     try {
       emitter.emit('data', parse(storedBuffer));
-      storedBuffer = Buffer.alloc(0);
     } catch (e) {
       console.error(e.message);
+    } finally {
+      storedBuffer = Buffer.alloc(0);
     }
   }
 }

@@ -35,6 +35,7 @@
 </script>
 
 <LabeledElement {label} {units}>
+  <slot />
   <input
     type="number"
     bind:value

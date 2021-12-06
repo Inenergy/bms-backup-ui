@@ -9,7 +9,7 @@
   import Select from '../molecules/Select.svelte';
   import Checkbox from '../molecules/Checkbox.svelte';
   import LabeledElement from '../atoms/LabeledElement.svelte';
-  import { chargePercent } from '../stores';
+  import { chargePercent, serialData } from '../stores';
   import ModeSelector from '../organisms/ModeSelector.svelte';
 </script>
 
@@ -34,6 +34,10 @@
                 >
                   <b>{$chargePercent}</b>
                 </LabeledElement>
+              {:else if param.name == 'fanLoadCorrective'}
+                <NumericInput attrs={param}>
+                  <span id="fanLoad">{$serialData.fanLoad}</span>/
+                </NumericInput>
               {:else if param.type == 'info'}
                 <Value {...param} />
               {:else if param.type == 'input'}
@@ -56,5 +60,9 @@
 <style>
   legend {
     font-size: 1.2em;
+  }
+  #fanLoad {
+    min-width: 3em;
+    display: inline-block;
   }
 </style>

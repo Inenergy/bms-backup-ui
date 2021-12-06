@@ -20,6 +20,8 @@ function handleData(incomingBuffer) {
     } finally {
       storedBuffer = Buffer.alloc(0);
     }
+  } else if (storedBuffer.length > 21) {
+      storedBuffer = Buffer.alloc(0);
   }
 }
 

@@ -149,7 +149,7 @@ module.exports = [
         {
           name: 'batVoltage',
           type: 'info',
-          label: 'voltge',
+          label: 'voltage',
           units: 'V',
           highlight: true,
         },

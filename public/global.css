@@ -1,7 +1,11 @@
 .container {
-  max-width: 128rem;
+  max-width: 144rem;
 }
 
 h2 {
   text-align: center;
+}
+fieldset {
+  border-width: revert;
+  padding: revert;
 }

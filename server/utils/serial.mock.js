@@ -34,6 +34,9 @@ dataMap.status = {
 };
 dataMap.errors = {
   maxBatVoltage: 1,
+  minFcTemp: 1,
+  FCError: 1,
+  batError: 1,
 };
 
 function sendData() {

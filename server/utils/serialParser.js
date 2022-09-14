@@ -35,7 +35,9 @@ function parseChunk(chunk) {
   let packetId = chunk[0];
   const idThreshold = 39;
   let entryIdx =
-    packetId < idThreshold ? ((packetId - 3) / 4) * 2 : ((packetId - 39) / 4) * 4 + 18;
+    packetId < idThreshold
+      ? ((packetId - 3) / 4) * 2
+      : ((packetId - 39) / 4) * 4 + 18;
   const parsedBytes = {};
   let i = 1;
   let checkSum = 0;
@@ -45,11 +47,12 @@ function parseChunk(chunk) {
     let rawValue;
     if (packetId < idThreshold) {
       rawValue = entry.signed ? chunk.readInt16BE(i) : chunk.readUInt16BE(i);
-      checkSum += chunk.readUInt16BE(i)
+      checkSum += chunk.readUInt16BE(i);
     } else {
       rawValue = entry.signed ? chunk.readInt8(i) : chunk[i];
-      checkSum += chunk[i]
+      checkSum += chunk[i];
     }
+    checkSum = checkSum & 0xffff;
     if (entryIdx === 2) {
       value = parseStatus(rawValue);
       i += 2;
@@ -66,8 +69,7 @@ function parseChunk(chunk) {
     parsedBytes[entry.name] = value;
     entryIdx++;
   }
-  checkSum %= 256 ** 2;
-  const recievedCheckSum = chunk.readUInt16BE(5)
+  const recievedCheckSum = chunk.readUInt16BE(5);
   if (checkSum == recievedCheckSum) {
     return parsedBytes;
   } else {

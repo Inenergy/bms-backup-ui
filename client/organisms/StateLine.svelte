@@ -1,6 +1,7 @@
 <script>
   import { serialData, chargePercent } from '../stores';
   import StatusLight from '../atoms/StatusLight.svelte';
+  import { __ } from '../utils/translator';
 
   let batStatus,
     FCStatus,
@@ -95,38 +96,33 @@
 
 <div class="row">
   <div class="column">
-    <label for="bat-state">АКБ</label>
-    <StatusLight status={batStatus} />
+    <StatusLight status={batStatus} label="battery" />
   </div>
   <div class="column">
-    <label for="fc-state">ТЭ ЭЛ</label>
-    <StatusLight status={FCStatus} />
+    <StatusLight status={FCStatus} label="fc electro" />
   </div>
   <div class="column">
-    <label for="fc-temp-state">ТЭ Темп</label>
-    <StatusLight status={FCTempStatus} />
+    <StatusLight status={FCTempStatus} label="fc temp" />
   </div>
   <div class="column">
-    <label for="dcdc-state">Dc-Dc</label>
-    <StatusLight status={DcDcStatus} />
+    <StatusLight status={DcDcStatus} label="Dc-Dc" />
   </div>
   <div class="column">
-    <label for="fan-state">Вентилятор</label>
-    <StatusLight status={fanStatus} />
+    <StatusLight status={fanStatus} label="fan" />
   </div>
-  <div class="column">
-    <label for="bms-state">BMS</label>
+  <div class="column" style="display: flex;">
+    <!-- <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} /> -->
     {#each BMSState as isOn}
-      <!-- <StatusLight status={$serialData[`BMS${i}On`] ? BMSStatus : 0} /> -->
-      <StatusLight status={isOn ? BMSStatus : 0} />
+      <StatusLight status={isOn ? BMSStatus : 0} label={'BMS'} />
     {/each}
   </div>
   <div class="column">
-    <label for="fan-state">Продувка</label>
-    <StatusLight status={$serialData.status.wasPurged || undefined} />
+    <StatusLight
+      status={$serialData.status.wasPurged ? 0 : void 0}
+      label="purge"
+    />
   </div>
   <div class="column">
-    <label for="fan-state">Закоротка</label>
-    <StatusLight status={$serialData.status.wasCS || undefined} />
+    <StatusLight status={$serialData.status.wasCS ? 0 : void 0} label="short" />
   </div>
 </div>

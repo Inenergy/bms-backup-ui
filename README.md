@@ -46,6 +46,20 @@ cd bms-backup-ui
 ```
 Версию в названии архива нужно поменять на текущую.
 
+## Установка статического IP
+Нужно отредактировать файл /etc/dhcpcd.conf вписав туда
+```sh
+interface NETWORK
+static ip_address=<STATIC_IP>/24
+static routers=<ROUTER_IP>
+static domain_name_servers=<DNS_IP>
+```
+Тип сети NETWORK либо eh0 (Ethernet) либо wlan0 (wi-fi)  
+Адрес DNS как правило совпадает с адресом роутера, узнать ip-адрес роутера и текущий ip можно при помощи комманды 
+```sh
+ip r | grep default
+```
+
 ## Подключение к стенду
 
 Для подключения к стенду потребуется подключить GPIO. Нам нужны пины GPIO 14 и GPIO 15. Схема распиновки:
